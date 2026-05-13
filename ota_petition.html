@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>台灣 OTA 駕駛輔助法規連署說明</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d13;
+    --surface: #111520;
+    --card: #161c2a;
+    --border: #1e2a40;
+    --accent: #00d4ff;
+    --accent2: #ff6b35;
+    --text: #e8edf5;
+    --muted: #7a8aa0;
+    --green: #00e87a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Serif TC', serif;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 80px 0 60px;
+    position: relative;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 4px 12px;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.1s;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.25s;
+  }
+
+  h1 span {
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 560px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.4s;
+  }
+
+  .hero-line {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    margin: 32px 0;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.55s;
+  }
+
+  /* SUMMARY CARD */
+  .summary-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    padding: 28px 32px;
+    margin-bottom: 60px;
+    font-size: 1.05rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.6s;
+  }
+
+  .summary-card strong {
+    color: var(--accent);
+  }
+
+  /* SECTION */
+  section {
+    margin-bottom: 64px;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--accent2);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 900;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  h2 .num {
+    font-family: 'Space Mono', monospace;
+    color: var(--accent);
+    font-size: 0.8em;
+    margin-right: 8px;
+  }
+
+  /* PROBLEM CARDS */
+  .problem-grid {
+    display: grid;
+    gap: 16px;
+  }
+
+  .problem-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 24px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .problem-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent2), transparent);
+  }
+
+  .problem-card:hover {
+    border-color: rgba(0,212,255,0.3);
+  }
+
+  .problem-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--accent2);
+  }
+
+  .problem-card p {
+    font-size: 0.92rem;
+    color: #b0bdd0;
+    line-height: 1.75;
+  }
+
+  .problem-card .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    letter-spacing: 0.1em;
+  }
+
+  /* DEMAND CARDS */
+  .demand-list {
+    display: grid;
+    gap: 20px;
+  }
+
+  .demand-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 20px;
+    align-items: start;
+    transition: transform 0.2s, border-color 0.3s;
+  }
+
+  .demand-card:hover {
+    transform: translateX(4px);
+    border-color: rgba(0,212,255,0.4);
+  }
+
+  .demand-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--border);
+    line-height: 1;
+    padding-top: 4px;
+  }
+
+  .demand-card:hover .demand-num {
+    color: var(--accent);
+    transition: color 0.2s;
+  }
+
+  .demand-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--accent);
+  }
+
+  .demand-card p {
+    font-size: 0.9rem;
+    color: #9aabc0;
+    line-height: 1.75;
+  }
+
+  /* IMPACT TABLE */
+  .impact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .impact-grid { grid-template-columns: 1fr; }
+  }
+
+  .impact-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 22px 24px;
+    position: relative;
+  }
+
+  .impact-icon {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+  }
+
+  .impact-card h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--green);
+  }
+
+  .impact-card p {
+    font-size: 0.88rem;
+    color: #8a9bb0;
+    line-height: 1.7;
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 48px 0;
+  }
+
+  /* CTA */
+  .cta {
+    background: var(--card);
+    border: 1px solid var(--accent);
+    padding: 36px 40px;
+    text-align: center;
+    margin-bottom: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(0,212,255,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta h2 {
+    margin-bottom: 12px;
+    font-size: 1.3rem;
+  }
+
+  .cta p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+  }
+
+  .cta a {
+    display: inline-block;
+    background: var(--accent);
+    color: #000;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 14px 32px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .cta a:hover {
+    background: #33deff;
+    transform: translateY(-2px);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 0;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">JOIN 公共政策平台 / 連署說明</div>
+    <h1>台灣車主<span>已付費</span>，<br>功能卻被<span>鎖在海外</span></h1>
+    <p class="hero-sub">這份連署要求政府修正法規，讓你的車子能合法收到與國際同步的 OTA 安全更新。</p>
+    <div class="hero-line"></div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="summary-card reveal">
+    一句話總結：現代汽車可以像手機一樣透過網路更新「自動煞車、車道維持」等安全功能，聯合國與歐盟已立法允許。但台灣的行政流程跟不上，導致<strong>台灣車主付了錢，卻比全球其他用戶晚好幾年才能解鎖功能</strong>。這份連署希望政府補上這個缺口。
+  </div>
+
+  <!-- BACKGROUND -->
+  <section class="reveal">
+    <div class="section-label">背景 / Background</div>
+    <h2>什麼是 OTA 更新？為什麼重要？</h2>
+    <p style="color:#b0bdd0; margin-bottom:16px;">
+      特斯拉、BMW、賓士等新世代車輛的駕駛輔助系統——自動緊急煞車、主動車道維持、進階避險——可以透過網路遠端升級，不用進廠。這就是 <strong style="color:var(--accent)">OTA（Over-the-Air）</strong> 更新。
+    </p>
+    <p style="color:#b0bdd0;">
+      聯合國已在 2024 年正式實施 <strong style="color:var(--accent)">UN R171（DCAS 駕駛控制輔助系統）</strong> 規範，歐盟依此對車廠核發認證，允許合法推送安全更新。台灣雖有參考條文，但行政執行遠遠落後。
+    </p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- PROBLEMS -->
+  <section class="reveal">
+    <div class="section-label">現行問題 / Current Issues</div>
+    <h2>台灣法規差在哪裡？</h2>
+    <div class="problem-grid">
+
+      <div class="problem-card">
+        <div class="tag">問題 01</div>
+        <h3>沒有「快速採認」機制</h3>
+        <p>歐盟或荷蘭 RDW 已認證的安全技術，台灣不承認，要求在國內重新測試一遍。費時費力，導致台灣用戶比國際晚好幾年才能收到功能更新。</p>
+      </div>
+
+      <div class="problem-card">
+        <div class="tag">問題 02</div>
+        <h3>現行規定是「沙盒實驗」邏輯</h3>
+        <p>交通部的補充作業規定設計給實驗性計畫用（每種車型僅限 20 輛申請）。但特斯拉、BMW 這類車全球已賣出幾十萬輛，用實驗框架審量產車，根本牛頭不對馬嘴。</p>
+      </div>
+
+      <div class="problem-card">
+        <div class="tag">問題 03</div>
+        <h3>國內根本沒有驗測能力</h3>
+        <p>法規雖然存在，但負責驗測的 ARTC（車輛研究測試中心）尚未建置符合 R171 標準的設備。結果是：有法規、沒能力驗、車廠想申請也沒門路——行政空轉。</p>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- DEMANDS -->
+  <section class="reveal">
+    <div class="section-label">連署訴求 / Demands</div>
+    <h2>這份連署要求政府做什麼？</h2>
+    <div class="demand-list">
+
+      <div class="demand-card">
+        <div class="demand-num">01</div>
+        <div>
+          <h3>建立「國際認證快速採認機制」</h3>
+          <p>對已取得 UN R171 或歐盟相關認證的量產車，直接採認國外技術報告與測試數據，免除在國內重複高成本實地測試，縮短科技導入台灣的時差。</p>
+        </div>
+      </div>
+
+      <div class="demand-card">
+        <div class="demand-num">02</div>
+        <div>
+          <h3>為「量產車型」制定專屬審核流程</h3>
+          <p>廢除沙盒式邏輯，為大眾市場的 OTA 軟體升級制定合理的審核機制，讓符合安全標準的輔助駕駛功能能合法推送給一般車主。</p>
+        </div>
+      </div>
+
+      <div class="demand-card">
+        <div class="demand-num">03</div>
+        <div>
+          <h3>限期完備 ARTC 的國內檢測量能</h3>
+          <p>要求經濟部督導 ARTC，限期完成符合 R171/DCAS 標準之設備建置與實驗室認證，確保「法規」與「驗測能力」同步到位，不再空轉。</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- IMPACT -->
+  <section class="reveal">
+    <div class="section-label">影響與效益 / Impact</div>
+    <h2>法規接軌後，誰受益？</h2>
+    <div class="impact-grid">
+
+      <div class="impact-card">
+        <div class="impact-icon">🛡️</div>
+        <h3>整體交通安全提升</h3>
+        <p>先進駕駛輔助系統已在國際上證實能有效降低人為疏失事故，台灣用路人可早日享有更安全的環境。</p>
+      </div>
+
+      <div class="impact-card">
+        <div class="impact-icon">💳</div>
+        <h3>保障消費者科技權益</h3>
+        <p>付費購車或訂閱功能的台灣車主，能即時取得與全球同步的功能更新，不再受行政時差拖累。</p>
+      </div>
+
+      <div class="impact-card">
+        <div class="impact-icon">🏭</div>
+        <h3>引導產業接軌國際</h3>
+        <p>明確的採認機制可吸引國際車廠將台灣列為優先導入市場，同時帶動國內供應鏈對接 R171 標準。</p>
+      </div>
+
+      <div class="impact-card">
+        <div class="impact-icon">🌐</div>
+        <h3>展現數位治理效能</h3>
+        <p>落實「軟體定義汽車」的監理思維，展現政府對數位轉型與智慧交通的支持，提升台灣的國際競爭力。</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta reveal">
+    <h2>想支持這份提案？</h2>
+    <p>前往 JOIN 公共政策平台進行附議，60 天內達 5,000 份即成案，政府須於 60 天內正式回應。</p>
+    <a href="https://join.gov.tw/idea/detail/a9184912-1766-4b8f-88a8-77388a03d609" target="_blank">→ 前往連署附議</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="container">
+    資料來源：JOIN 公共政策網路參與平台 ／ 內容整理說明用途
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
